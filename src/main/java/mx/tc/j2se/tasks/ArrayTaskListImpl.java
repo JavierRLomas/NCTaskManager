@@ -25,8 +25,8 @@ public class ArrayTaskListImpl implements ArrayTaskList {
         array[0] = new TaskImpl();
     }
 
-    /** adds a new task object to the array
-     * @param task  name of the object to be inserted
+    /** adds a new task objet to the array
+     * @param task  name of the objet to be inserted
      */
     @Override
     public void add(Task task) {
