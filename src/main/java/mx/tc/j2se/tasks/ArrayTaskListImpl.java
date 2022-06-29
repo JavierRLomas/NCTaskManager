@@ -3,7 +3,7 @@ import java.lang.IllegalArgumentException;
 
 /**
  * ArrayTaskListImpl
- * V.1.1
+ * V.1.2
  * 06.28.22
  * Javier Ramírez Lomas
  */
@@ -21,8 +21,8 @@ public class ArrayTaskListImpl implements ArrayTaskList {
     public ArrayTaskListImpl(){
         cont = 0;
         size = 1;
-        array = new TaskImpl[1];
-        array[0] = new TaskImpl();
+        array = new Task[1];
+  //      array[0] = new TaskImpl();
     }
 
     /** adds a new task objet to the array
@@ -39,7 +39,7 @@ public class ArrayTaskListImpl implements ArrayTaskList {
      */
     public void growSize() {
         if (cont == size) {
-            temp = new TaskImpl [size + 1];
+            temp = new Task [size + 1];
             {
                 for (int i = 0; i < size; i++) {
                     temp[i] = array[i];
@@ -58,7 +58,7 @@ public class ArrayTaskListImpl implements ArrayTaskList {
             array[x] = array[x + 1];
         }
         if (cont > 0) {
-            temp = new TaskImpl[cont];
+            temp = new Task[cont];
             for (int y = 0; y < cont; y++) {
                 temp [y] = array [y];
             }
@@ -116,35 +116,26 @@ public class ArrayTaskListImpl implements ArrayTaskList {
     /** select tasks in the range selected
      * @param from  start time of the range
      * @param to    end time of the range
-     * @return      task array. Not in version 1.1
+     * @return      task array
      */
     @Override
     public ArrayTaskList incoming(int from, int to) {
-        temp = new TaskImpl [size];
+        ArrayTaskList taskTemp = new ArrayTaskListImpl();
         int j = 0;
         for (Task task : array) {
             if (!task.isRepeated()) {
                 if (((task.getStartTime()) > from) && ((task.getStartTime()) < to)) {
-                    temp[j] = task;
-                    j++;
+                    taskTemp.add(task);
                 }
             } else if (((task.getStartTime()) > from) && ((task.getStartTime()) < to)) {
-                    temp[j] = task;
-                    j++;
+                    taskTemp.add(task);
                 } else if (((task.nextTimeAfter(from)) > from) && ((task.nextTimeAfter(from)) < to)) {
-                    temp[j] = task;
-                    j++;
+                    taskTemp.add(task);
                 }
-
         }
-        for (int y = 0; y < j; y++) {
-            System.out.println("Title: " + temp[y].getTitle() );
-            System.out.println("    Start time: " + temp[y].getTime() );
-            if (temp[y].isRepeated()) {
-                System.out.println("    End time: " + temp[y].getEndTime() );
-                System.out.println("    Interval: " + temp[y].getRepeatInterval() );
-            }
+        for (int i = 0; i < taskTemp.size(); i++) {
+            taskTemp.getTask(i+1);
         }
-        return null;
+        return taskTemp;
     }
 }

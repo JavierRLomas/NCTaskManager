@@ -28,7 +28,7 @@ public class Main {
 		//Test p2
 
 		ArrayTaskList lista = new ArrayTaskListImpl();
-		Task objeto = new TaskImpl("Objeto1", 3);
+		Task objeto = new TaskImpl("objeto", 7);
 		objeto.setActive(true);
 		lista.add(objeto);
 		System.out.println("lenght: " + lista.size());
@@ -48,7 +48,8 @@ public class Main {
 		}
 
 		System.out.println("%%%%%%%%%%%%%%");
-		lista.incoming(2, 7);
+		lista.incoming(1, 71);
+
 
 		lista.remove(objeto3);
 
