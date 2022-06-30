@@ -25,7 +25,7 @@ public class Main {
 		System.out.println("next time5: " + noActive.nextTimeAfter(-7));
 */
 
-		//Test p2
+/*		//Test p2
 
 		ArrayTaskList lista = new ArrayTaskListImpl();
 		Task objeto = new TaskImpl("objeto", 7);
@@ -57,7 +57,7 @@ public class Main {
 
 		for (int i = 0; i < lista.size(); i++) {
 			lista.getTask(i+1);
-		}
+		}*/
 
 	}
 }
