@@ -25,39 +25,46 @@ public class Main {
 		System.out.println("next time5: " + noActive.nextTimeAfter(-7));
 */
 
-/*		//Test p2
+		//Test p2
 
 		ArrayTaskList lista = new ArrayTaskListImpl();
-		Task objeto = new TaskImpl("objeto", 7);
+		Task objeto = new TaskImpl("objeto", 7, 20, 5);
 		objeto.setActive(true);
 		lista.add(objeto);
 		System.out.println("lenght: " + lista.size());
 
-		Task objeto2 = new TaskImpl("objeto2", 5, 10, 3);
+		Task objeto2 = new TaskImpl("objeto2", 5, 18, 3);
 		objeto2.setActive(true);
 		lista.add(objeto2);
 		System.out.println("lenght: " + lista.size());
 
-		Task objeto3 = new TaskImpl("objeto3", 7, 12, 4);
+		Task objeto3 = new TaskImpl("objeto3", 2);
 		objeto3.setActive(true);
 		lista.add(objeto3);
+		System.out.println("lenght: " + lista.size());
+
+		Task objeto4 = new TaskImpl("objeto4", 9);
+		objeto4.setActive(true);
+		lista.add(objeto4);
 		System.out.println("lenght: " + lista.size());
 
 		for (int i = 0; i < lista.size(); i++) {
 			lista.getTask(i+1);
 		}
 
+		lista.getTask(6);
 		System.out.println("%%%%%%%%%%%%%%");
-		lista.incoming(1, 71);
+		lista.incoming(80, 100);
 
+
+		System.out.println("\n \n %%%%%%%%%%%%%%");
+
+		System.out.println("Nexttime ob: " + objeto.nextTimeAfter(-5) + "\n");
+		System.out.println("Nexttime ob: " + objeto3.nextTimeAfter(8) + "\n");
+		System.out.println("Nexttime ob: " + objeto4.nextTimeAfter(1) + "\n");
 
 		lista.remove(objeto3);
 
-		System.out.println("lenght: " + lista.size());
-
-		for (int i = 0; i < lista.size(); i++) {
-			lista.getTask(i+1);
-		}*/
 
 	}
 }

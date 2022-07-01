@@ -31,9 +31,13 @@ public class TaskImpl implements Task {
      */
     public TaskImpl (String title, int time) {
         this.title = title;
-        this.startTime = time;
-        isActive = false;
-        isRepetitive = false;
+        if (time > 0) {
+            this.startTime = time;
+            isActive = false;
+            isRepetitive = false;
+        } else {
+            throw new IllegalArgumentException("Invalid Argument: Time must be positive.");
+        }
     }
 
     /**
@@ -47,19 +51,20 @@ public class TaskImpl implements Task {
         /* class constructor. Name of the task, start time and end time are specified.
          * Inactive task declared. Repetitive task declared */
         this.title = title;
-        this.startTime = iniTime;
-        if (endTime > iniTime) {
-            this.endTime = endTime;
-        } else {
-            throw new IllegalArgumentException("Invalid Argument: Task cannot ends before it starts");
-        }
-        if (interval > 0) {
-            this.period = interval;
-        } else {
-            throw new IllegalArgumentException("Invalid Argument: Interval must be greater than zero");
-        }
-        isActive = false;
-        isRepetitive = true;
+        this.setTime(iniTime, endTime, interval);
+//        if ((iniTime > 0) && (endTime > 0) && (interval > 0)) {
+//            this.startTime = iniTime;
+//            this.period = interval;
+//            if (endTime > iniTime) {
+//                this.endTime = endTime;
+//            } else {
+//                throw new IllegalArgumentException("Invalid Argument: Task cannot ends before it starts.");
+//            }
+//            isActive = false;
+//            isRepetitive = true;
+//        } else {
+//            throw new IllegalArgumentException("Invalid Argument: Time must be positive.");
+//        }
     }
 
     /**
@@ -160,29 +165,30 @@ public class TaskImpl implements Task {
 
     /**
      *  Assigns start time, end time and an interval. Sets isRepetitive a true status
-     * @param start     start time of the task
-     * @param end       end time of the task
-     * @param interval  interval of repetition
+     * @param iniTime       start time of the task
+     * @param endTime       end time of the task
+     * @param interval      interval of repetition
      */
     @Override
-    public void setTime(int start, int end, int interval) {
-        this.startTime = start;
-        if (end > start) {
-            this.endTime = end;
-        } else {
-            throw new IllegalArgumentException("Invalid Argument: Task cannot ends before it starts");
-        }
-        if (interval > 0) {
+    public void setTime(int iniTime, int endTime, int interval) {
+        if ((iniTime > 0) && (endTime > 0) && (interval > 0)) {
+            this.startTime = iniTime;
             this.period = interval;
+            if (endTime > iniTime) {
+                this.endTime = endTime;
+            } else {
+                throw new IllegalArgumentException("Invalid Argument: Task cannot ends before it starts.");
+            }
+
         } else {
-            throw new IllegalArgumentException("Invalid Argument: Interval must be greater than zero");
+            throw new IllegalArgumentException("Invalid Argument: Time must be positive.");
         }
         isRepetitive = true;
     }
 
     /**
      * gets the status of isRepetitive
-     * @return boolean value of isRepetitive
+     * @return      boolean value of isRepetitive
      */
     @Override
     public boolean isRepeated() {
@@ -191,44 +197,35 @@ public class TaskImpl implements Task {
 
     /**
      *  Verify the next time a task would be executed
-     * @param current time selected to verify next event
+     * @param current       time selected to verify next event
      */
     @Override
     public int nextTimeAfter(int current) {
         if (current <= 0){
             nextTime = -1;
-            throw new IllegalArgumentException("Invalid Argument: Cannot go before today");
+            throw new IllegalArgumentException("Invalid Argument: Time must be positive.");
         } else if (isActive) {
-            System.out.println("Task is active.");
             if (isRepetitive) {
                 if (current == startTime) {
                     nextTime = startTime + period;
-                    System.out.println("Task starts today and next will be on: " + nextTime);
                 } else if (current < startTime) {
                     nextTime = startTime;
-                    System.out.println("Next time will be on " + nextTime);
                 } else if (current < endTime) {
                     int lap = current - startTime;
                     int unoAnt = lap / period;
                     nextTime = startTime + (period * (unoAnt + 1));
-                    System.out.println("next time = " + nextTime);
                 } else if (current > endTime) {
-                    System.out.println("The task will not be executed anymore");
                     nextTime = -1;
                 } else {
                     nextTime = -1;
                     throw new IllegalArgumentException("Invalid Argument");
                 }
             } else {
-                System.out.println("Task is non repetitive.");
                 if (current > startTime) {
-                    System.out.println("Task has already executed on " + startTime);
                     nextTime = -1;
                 } else if (current < startTime) {
                     nextTime = startTime;
-                    System.out.println("First execution on " + nextTime);
                 } else {
-                    System.out.println("There is no next time.");
                     nextTime = -1;
                 }
             }
